@@ -46,8 +46,8 @@ fun CoachBubble(text: String, type: MessageType, modifier: Modifier = Modifier) 
                     bottomStart = 16.dp, bottomEnd = 16.dp
                 )
             ).background(
-                when {
-                    isUser -> MaterialTheme.colorScheme.primary.copy(alpha = 0.15f)
+                brush = when {
+                    isUser -> Brush.linearGradient(listOf(MaterialTheme.colorScheme.primary.copy(alpha = 0.15f), MaterialTheme.colorScheme.primary.copy(alpha = 0.15f)))
                     isCelebration -> Brush.linearGradient(listOf(SageGreen50.copy(0.2f), Lavender60.copy(0.2f)))
                     else -> Brush.linearGradient(listOf(GentlePink80.copy(0.3f), GentlePink80.copy(0.15f)))
                 }
