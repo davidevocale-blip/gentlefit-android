@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.gentlefit.app.data.local.entity.NewsEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -27,4 +28,10 @@ interface NewsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllNews(news: List<NewsEntity>)
+
+    @Update
+    suspend fun updateNews(news: NewsEntity)
+
+    @Query("DELETE FROM news WHERE id = :id")
+    suspend fun deleteNews(id: Long)
 }

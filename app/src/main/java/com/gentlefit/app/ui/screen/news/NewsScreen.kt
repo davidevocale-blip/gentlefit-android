@@ -1,6 +1,5 @@
 package com.gentlefit.app.ui.screen.news
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,8 +10,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -23,7 +24,7 @@ import com.gentlefit.app.ui.components.NewsCard
 import com.gentlefit.app.ui.theme.*
 
 @Composable
-fun NewsScreen(viewModel: NewsViewModel = hiltViewModel()) {
+fun NewsScreen(onNavigateToAdmin: () -> Unit = {}, viewModel: NewsViewModel = hiltViewModel()) {
     val articles by viewModel.news.collectAsState()
     val selectedCat by viewModel.selectedCategory.collectAsState()
     val selectedArticle by viewModel.selectedArticle.collectAsState()
@@ -35,12 +36,17 @@ fun NewsScreen(viewModel: NewsViewModel = hiltViewModel()) {
 
     LazyColumn(
         Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
-            .padding(horizontal = 20.dp).statusBarsPadding(),
+            .padding(horizontal = 24.dp).statusBarsPadding(),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         item {
             Spacer(Modifier.height(16.dp))
-            Text("📰 News & Benessere", style = MaterialTheme.typography.headlineLarge, fontWeight = FontWeight.Bold)
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+                Text("📰 News & Benessere", style = MaterialTheme.typography.headlineLarge, fontWeight = FontWeight.Bold)
+                IconButton(onClick = onNavigateToAdmin) {
+                    Icon(Icons.Rounded.Settings, "Admin", tint = Plum40)
+                }
+            }
             Spacer(Modifier.height(12.dp))
 
             LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -60,7 +66,7 @@ fun NewsScreen(viewModel: NewsViewModel = hiltViewModel()) {
             NewsCard(article = article, onClick = { viewModel.selectArticle(article) })
         }
 
-        item { Spacer(Modifier.height(100.dp)) }
+        item { Spacer(Modifier.height(80.dp)) }
     }
 }
 
@@ -73,9 +79,9 @@ private fun NewsDetailView(article: com.gentlefit.app.domain.model.NewsArticle, 
         IconButton(onClick = onBack, modifier = Modifier.padding(8.dp)) {
             Icon(Icons.AutoMirrored.Rounded.ArrowBack, "Indietro")
         }
-        Column(Modifier.padding(horizontal = 20.dp)) {
+        Column(Modifier.padding(horizontal = 24.dp)) {
             Text("${article.category.emoji} ${article.category.displayName}",
-                style = MaterialTheme.typography.labelMedium, color = GentlePink50)
+                style = MaterialTheme.typography.labelMedium, color = Plum40)
             Spacer(Modifier.height(8.dp))
             Text(article.title, style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
             Spacer(Modifier.height(4.dp))

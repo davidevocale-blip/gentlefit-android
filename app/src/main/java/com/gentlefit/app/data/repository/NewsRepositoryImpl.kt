@@ -33,6 +33,14 @@ class NewsRepositoryImpl @Inject constructor(
         newsDao.insertNews(article.toEntity())
     }
 
+    override suspend fun updateArticle(article: NewsArticle) {
+        newsDao.updateNews(article.toEntity())
+    }
+
+    override suspend fun deleteArticle(articleId: Long) {
+        newsDao.deleteNews(articleId)
+    }
+
     private fun NewsEntity.toDomain(): NewsArticle = NewsArticle(
         id = id,
         title = title,

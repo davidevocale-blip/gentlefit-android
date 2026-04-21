@@ -26,7 +26,7 @@ fun GoalsScreen(viewModel: GoalsViewModel = hiltViewModel()) {
 
     LazyColumn(
         Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
-            .padding(horizontal = 20.dp).statusBarsPadding(),
+            .padding(horizontal = 24.dp).statusBarsPadding(),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         item {
@@ -76,11 +76,11 @@ fun GoalsScreen(viewModel: GoalsViewModel = hiltViewModel()) {
                         Text(goal.title, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Medium)
                         Text(goal.description, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
-                    Text("+ Aggiungi", style = MaterialTheme.typography.labelSmall, color = GentlePink50, fontWeight = FontWeight.SemiBold)
+                    Text("+ Aggiungi", style = MaterialTheme.typography.labelSmall, color = Plum40, fontWeight = FontWeight.SemiBold)
                 }
             }
         }
 
-        item { Spacer(Modifier.height(100.dp)) }
+        item { Spacer(Modifier.height(80.dp)) }
     }
 }

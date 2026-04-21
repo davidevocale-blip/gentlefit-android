@@ -10,4 +10,6 @@ interface NewsRepository {
     fun getNewsById(id: Long): Flow<NewsArticle?>
     suspend fun markAsRead(newsId: Long)
     suspend fun insertNews(article: NewsArticle)
+    suspend fun updateArticle(article: NewsArticle)
+    suspend fun deleteArticle(articleId: Long)
 }

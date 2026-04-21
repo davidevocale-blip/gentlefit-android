@@ -27,7 +27,7 @@ fun ProgressScreen(viewModel: ProgressViewModel = hiltViewModel()) {
 
     Column(
         Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
-            .verticalScroll(rememberScrollState()).padding(horizontal = 20.dp).statusBarsPadding()
+            .verticalScroll(rememberScrollState()).padding(horizontal = 24.dp).statusBarsPadding()
     ) {
         Spacer(Modifier.height(16.dp))
         Text("📊 I tuoi progressi", style = MaterialTheme.typography.headlineLarge, fontWeight = FontWeight.Bold)
@@ -106,6 +106,6 @@ fun ProgressScreen(viewModel: ProgressViewModel = hiltViewModel()) {
                 }
             }
         }
-        Spacer(Modifier.height(100.dp))
+        Spacer(Modifier.height(80.dp))
     }
 }

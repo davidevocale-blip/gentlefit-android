@@ -30,4 +30,7 @@ interface RoutineDao {
 
     @Query("SELECT * FROM routines WHERE isExerciseCompleted = 1 OR isFoodTipFollowed = 1 OR isGoalCompleted = 1 ORDER BY date DESC")
     fun getActiveRoutines(): Flow<List<RoutineEntity>>
+
+    @Query("SELECT COUNT(*) FROM routines WHERE (isExerciseCompleted = 1 OR isFoodTipFollowed = 1 OR isGoalCompleted = 1) AND date >= :startDate")
+    fun getUsageCountSince(startDate: String): Flow<Int>
 }

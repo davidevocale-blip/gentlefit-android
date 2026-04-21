@@ -2,73 +2,97 @@ package com.gentlefit.app.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-// ─── Primary: Rosa gentile ───
-val GentlePink10 = Color(0xFF3D1A2A)
-val GentlePink20 = Color(0xFF6B2E4A)
-val GentlePink30 = Color(0xFF9A4269)
-val GentlePink40 = Color(0xFFD4749C)
-val GentlePink50 = Color(0xFFE8A0BF)
-val GentlePink60 = Color(0xFFF0BDD4)
-val GentlePink70 = Color(0xFFF5D5E3)
-val GentlePink80 = Color(0xFFFAE8F0)
-val GentlePink90 = Color(0xFFFDF3F7)
+// ─── Primary: Prugna ───
+val Plum10 = Color(0xFF2D1230)
+val Plum20 = Color(0xFF4A1F50)
+val Plum30 = Color(0xFF6B2E6E)
+val Plum40 = Color(0xFF8B4B8E)
+val Plum50 = Color(0xFFA970AC)
+val Plum60 = Color(0xFFC09AC3)
+val Plum70 = Color(0xFFD4B8D6)
+val Plum80 = Color(0xFFE8D6E9)
+val Plum90 = Color(0xFFF5EDF5)
 
-// ─── Secondary: Verde salvia ───
+// ─── Secondary: Verde salvia (armonizzato) ───
 val SageGreen10 = Color(0xFF1A2E1A)
 val SageGreen20 = Color(0xFF2E5A2E)
 val SageGreen30 = Color(0xFF4A7E4A)
-val SageGreen40 = Color(0xFF7DA574)
-val SageGreen50 = Color(0xFFA7C4A0)
-val SageGreen60 = Color(0xFFBDD4B8)
-val SageGreen70 = Color(0xFFD4E4D0)
-val SageGreen80 = Color(0xFFE8F0E6)
-val SageGreen90 = Color(0xFFF3F8F2)
+val SageGreen40 = Color(0xFF6A9E68)
+val SageGreen50 = Color(0xFF8BBF88)
+val SageGreen60 = Color(0xFFA8D4A6)
+val SageGreen70 = Color(0xFFC5E4C3)
+val SageGreen80 = Color(0xFFDFF0DE)
+val SageGreen90 = Color(0xFFF0F8EF)
 
-// ─── Tertiary: Crema / Wheat caldo ───
-val WarmCream10 = Color(0xFF3D3020)
-val WarmCream20 = Color(0xFF6B5638)
-val WarmCream30 = Color(0xFF9A7D50)
-val WarmCream40 = Color(0xFFD4B896)
-val WarmCream50 = Color(0xFFF5DEB3)
-val WarmCream60 = Color(0xFFF8E6C5)
-val WarmCream70 = Color(0xFFFAEED7)
-val WarmCream80 = Color(0xFFFCF5E9)
-val WarmCream90 = Color(0xFFFEFAF4)
+// ─── Tertiary: Malva / Lavanda calda ───
+val Mauve10 = Color(0xFF2B1F30)
+val Mauve20 = Color(0xFF4D3855)
+val Mauve30 = Color(0xFF6F527A)
+val Mauve40 = Color(0xFF917198)
+val Mauve50 = Color(0xFFB094B6)
+val Mauve60 = Color(0xFFC7B2CC)
+val Mauve70 = Color(0xFFDAD0DE)
+val Mauve80 = Color(0xFFEDE6EF)
+val Mauve90 = Color(0xFFF7F3F8)
 
-// ─── Accent: Rosa chiaro luminoso ───
-val AccentPink = Color(0xFFFFB6C1)
-val AccentPinkDark = Color(0xFFFF8FAB)
+// ─── Accent: Viola luminoso ───
+val AccentViolet = Color(0xFFBA68C8)
+val AccentVioletDark = Color(0xFF9C27B0)
 
 // ─── Lavanda (per elementi speciali) ───
-val Lavender40 = Color(0xFF9B8EC4)
-val Lavender60 = Color(0xFFC4B8E0)
-val Lavender80 = Color(0xFFE8E0F5)
+val Lavender40 = Color(0xFF7E6BA8)
+val Lavender60 = Color(0xFFB0A0D0)
+val Lavender80 = Color(0xFFDDD4EE)
 
 // ─── Backgrounds ───
-val LightBackground = Color(0xFFFFF8F0)
-val LightOnBackground = Color(0xFF2D2D2D)
+val LightBackground = Color(0xFFFDF5FD)
+val LightOnBackground = Color(0xFF2D1B2E)
 val LightSurface = Color(0xFFFFFFFF)
-val LightOnSurface = Color(0xFF3D3D3D)
-val LightSurfaceVariant = Color(0xFFF8F0E8)
-val LightOnSurfaceVariant = Color(0xFF6B6060)
-val LightOutline = Color(0xFFD4C4B8)
+val LightOnSurface = Color(0xFF2D1B2E)
+val LightSurfaceVariant = Color(0xFFF3E8F3)
+val LightOnSurfaceVariant = Color(0xFF5C4A5D)
+val LightOutline = Color(0xFFCBB8CC)
 
-val DarkBackground = Color(0xFF1A1A2E)
-val DarkOnBackground = Color(0xFFF0E6D8)
-val DarkSurface = Color(0xFF222244)
-val DarkOnSurface = Color(0xFFE8DDD0)
-val DarkSurfaceVariant = Color(0xFF2E2E50)
-val DarkOnSurfaceVariant = Color(0xFFB8ADA0)
-val DarkOutline = Color(0xFF5A5070)
+val DarkBackground = Color(0xFF1A0F1A)
+val DarkOnBackground = Color(0xFFF0E6F0)
+val DarkSurface = Color(0xFF261826)
+val DarkOnSurface = Color(0xFFEBDEEB)
+val DarkSurfaceVariant = Color(0xFF352435)
+val DarkOnSurfaceVariant = Color(0xFFBEADBE)
+val DarkOutline = Color(0xFF6A5470)
 
 // ─── Functional ───
-val SuccessGreen = Color(0xFF81C784)
-val WarningAmber = Color(0xFFFFD54F)
-val ErrorSoft = Color(0xFFE57373)
-val InfoBlue = Color(0xFF90CAF9)
+val SuccessGreen = Color(0xFF66BB6A)
+val WarningAmber = Color(0xFFFFCA28)
+val ErrorSoft = Color(0xFFEF5350)
+val InfoBlue = Color(0xFF42A5F5)
 
 // ─── Gradients helpers ───
-val GradientPinkStart = Color(0xFFF5D5E3)
-val GradientPinkEnd = Color(0xFFFFF8F0)
-val GradientSageStart = Color(0xFFD4E4D0)
-val GradientSageEnd = Color(0xFFF3F8F2)
+val GradientPlumStart = Color(0xFFE8D6E9)
+val GradientPlumEnd = Color(0xFFFDF5FD)
+val GradientSageStart = Color(0xFFC5E4C3)
+val GradientSageEnd = Color(0xFFF0F8EF)
+
+// ─── Legacy aliases (per compatibilità componenti) ───
+val GentlePink10 = Plum10
+val GentlePink20 = Plum20
+val GentlePink30 = Plum30
+val GentlePink40 = Plum40
+val GentlePink50 = Plum50
+val GentlePink60 = Plum60
+val GentlePink70 = Plum70
+val GentlePink80 = Plum80
+val GentlePink90 = Plum90
+val GradientPinkStart = GradientPlumStart
+val GradientPinkEnd = GradientPlumEnd
+
+// ─── Warm tones ───
+val WarmCream10 = Color(0xFF302520)
+val WarmCream20 = Color(0xFF5A4838)
+val WarmCream30 = Color(0xFF846B50)
+val WarmCream40 = Color(0xFFB09478)
+val WarmCream50 = Color(0xFFD4B896)
+val WarmCream60 = Color(0xFFE2CCAE)
+val WarmCream70 = Color(0xFFEEDFC8)
+val WarmCream80 = Color(0xFFF6EFE2)
+val WarmCream90 = Color(0xFFFBF7F1)
