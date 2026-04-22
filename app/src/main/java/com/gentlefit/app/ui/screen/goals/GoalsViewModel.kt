@@ -16,10 +16,14 @@ class GoalsViewModel @Inject constructor(
     private val goalRepository: GoalRepository
 ) : ViewModel() {
 
+    private val today = LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE)
+
     val activeGoals: StateFlow<List<MicroGoal>> = goalRepository.getActiveGoals()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
+    // Only show goals completed TODAY, hide previous days' completed goals
     val completedGoals: StateFlow<List<MicroGoal>> = goalRepository.getCompletedGoals()
+        .map { goals -> goals.filter { it.completedDate == today } }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     val suggestedGoals: StateFlow<List<MicroGoal>> = goalRepository.getSuggestedGoals()
@@ -27,7 +31,7 @@ class GoalsViewModel @Inject constructor(
 
     fun completeGoal(goalId: Long) {
         viewModelScope.launch {
-            goalRepository.completeGoal(goalId, LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE))
+            goalRepository.completeGoal(goalId, today)
         }
     }
 

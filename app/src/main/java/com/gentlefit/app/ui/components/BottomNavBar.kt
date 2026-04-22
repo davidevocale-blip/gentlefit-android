@@ -12,14 +12,16 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.gentlefit.app.ui.theme.Plum30
 import com.gentlefit.app.ui.theme.Plum40
-import com.gentlefit.app.ui.theme.Plum80
+import com.gentlefit.app.ui.theme.Plum70
 
 data class BottomNavItem(val route: String, val label: String, val icon: ImageVector)
 
@@ -33,32 +35,47 @@ val bottomNavItems = listOf(
 
 @Composable
 fun GentleFitBottomNav(currentRoute: String, onNavigate: (String) -> Unit, modifier: Modifier = Modifier) {
-    Box(modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 4.dp)) {
-        NavigationBar(
-            modifier = Modifier.clip(RoundedCornerShape(20.dp)).height(64.dp),
-            containerColor = MaterialTheme.colorScheme.surface,
-            tonalElevation = 2.dp
+    Surface(
+        modifier = modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp)
+            .navigationBarsPadding(),
+        shape = RoundedCornerShape(24.dp),
+        color = MaterialTheme.colorScheme.surface,
+        shadowElevation = 8.dp,
+        tonalElevation = 4.dp
+    ) {
+        Row(
+            Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 6.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             bottomNavItems.forEach { item ->
                 val selected = currentRoute == item.route
-                NavigationBarItem(
-                    selected = selected,
-                    onClick = { onNavigate(item.route) },
-                    icon = {
-                        if (selected) {
-                            Box(Modifier.size(36.dp).clip(CircleShape).background(Brush.linearGradient(listOf(Plum40, Plum80))), contentAlignment = Alignment.Center) {
-                                Icon(item.icon, item.label, Modifier.size(18.dp), tint = Color.White)
-                            }
-                        } else {
-                            Icon(item.icon, item.label, Modifier.size(20.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant)
-                        }
-                    },
-                    label = {
-                        Text(item.label, fontSize = 9.sp, fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Normal,
-                            color = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant)
-                    },
-                    colors = NavigationBarItemDefaults.colors(indicatorColor = Color.Transparent)
-                )
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .weight(1f)
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(if (selected) Plum40.copy(0.12f) else Color.Transparent)
+                        .padding(vertical = 6.dp)
+                ) {
+                    IconButton(
+                        onClick = { onNavigate(item.route) },
+                        modifier = Modifier.size(36.dp)
+                    ) {
+                        Icon(
+                            item.icon, item.label,
+                            modifier = Modifier.size(22.dp),
+                            tint = if (selected) Plum30 else MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                    Text(
+                        item.label,
+                        fontSize = 10.sp,
+                        fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal,
+                        color = if (selected) Plum30 else MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 1
+                    )
+                }
             }
         }
     }

@@ -9,13 +9,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.gentlefit.app.domain.model.ProgressEntry
+import com.gentlefit.app.ui.theme.Plum30
+import com.gentlefit.app.ui.theme.SageGreen40
 import com.gentlefit.app.ui.theme.SageGreen50
 import com.gentlefit.app.ui.theme.Lavender40
+import java.time.LocalDate
+import java.time.format.TextStyle
+import java.util.Locale
 
 @Composable
 fun ProgressChart(entries: List<ProgressEntry>, modifier: Modifier = Modifier) {
@@ -26,29 +33,78 @@ fun ProgressChart(entries: List<ProgressEntry>, modifier: Modifier = Modifier) {
                 .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)),
             contentAlignment = Alignment.Center
         ) {
-            Text("📊 I tuoi progressi appariranno qui", style = MaterialTheme.typography.bodyMedium)
+            Text("📊 I tuoi progressi appariranno qui", style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurface)
         }
         return
     }
+
+    // Build a calendar-like weekly view
+    val today = LocalDate.now()
+    val weekDays = (6 downTo 0).map { today.minusDays(it.toLong()) }
+    val entryByDate = entries.associateBy { it.date }
+
     Column(
         modifier = modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp))
             .background(MaterialTheme.colorScheme.surface).padding(16.dp)
     ) {
-        Text("La tua settimana", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
+        Text("📅 La tua settimana", style = MaterialTheme.typography.titleSmall,
+            fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.onSurface)
         Spacer(Modifier.height(16.dp))
-        Row(Modifier.fillMaxWidth().height(100.dp), horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.Bottom) {
-            entries.takeLast(7).forEach { entry ->
-                Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Bottom) {
-                    Box(Modifier.width(12.dp).height((entry.energyLevel / 5f * 60).dp).clip(RoundedCornerShape(topStart = 4.dp, topEnd = 4.dp)).background(SageGreen50))
-                    Spacer(Modifier.height(2.dp))
-                    Box(Modifier.width(12.dp).height((entry.sleepQuality / 5f * 60).dp).clip(RoundedCornerShape(topStart = 4.dp, topEnd = 4.dp)).background(Lavender40.copy(alpha = 0.7f)))
+
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
+            weekDays.forEach { day ->
+                val entry = entryByDate[day.toString()]
+                val isToday = day == today
+                val dayName = day.dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.ITALIAN)
+                    .replaceFirstChar { it.uppercase() }.take(3)
+
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.width(40.dp)
+                ) {
+                    // Day label
+                    Text(dayName, style = MaterialTheme.typography.labelSmall,
+                        fontWeight = if (isToday) FontWeight.Bold else FontWeight.Normal,
+                        color = if (isToday) Plum30 else MaterialTheme.colorScheme.onSurfaceVariant,
+                        fontSize = 10.sp)
+                    Text("${day.dayOfMonth}", style = MaterialTheme.typography.labelSmall,
+                        fontWeight = if (isToday) FontWeight.Bold else FontWeight.Normal,
+                        color = if (isToday) Plum30 else MaterialTheme.colorScheme.onSurface,
+                        fontSize = 11.sp)
+                    Spacer(Modifier.height(6.dp))
+
+                    // Bars
+                    Box(Modifier.height(80.dp).width(28.dp), contentAlignment = Alignment.BottomCenter) {
+                        if (entry != null) {
+                            Row(Modifier.fillMaxHeight(), horizontalArrangement = Arrangement.spacedBy(2.dp), verticalAlignment = Alignment.Bottom) {
+                                // Energy bar
+                                Box(Modifier.width(12.dp).fillMaxHeight(entry.energyLevel / 5f)
+                                    .clip(RoundedCornerShape(topStart = 4.dp, topEnd = 4.dp))
+                                    .background(Brush.verticalGradient(listOf(SageGreen40, SageGreen50))))
+                                // Sleep bar
+                                Box(Modifier.width(12.dp).fillMaxHeight(entry.sleepQuality / 5f)
+                                    .clip(RoundedCornerShape(topStart = 4.dp, topEnd = 4.dp))
+                                    .background(Brush.verticalGradient(listOf(Lavender40.copy(0.6f), Lavender40))))
+                            }
+                        } else {
+                            // Empty placeholder
+                            Box(Modifier.width(28.dp).height(4.dp).clip(RoundedCornerShape(2.dp))
+                                .background(MaterialTheme.colorScheme.outlineVariant.copy(0.3f)))
+                        }
+                    }
+
                     Spacer(Modifier.height(4.dp))
-                    Text(entry.mood.emoji, fontSize = 12.sp)
-                    Text(entry.date.takeLast(2), style = MaterialTheme.typography.labelSmall, fontSize = 9.sp)
+
+                    // Mood emoji
+                    Text(entry?.mood?.emoji ?: "·", fontSize = 14.sp, textAlign = TextAlign.Center)
                 }
             }
         }
+
         Spacer(Modifier.height(12.dp))
+
+        // Legend
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
             LegendItem(SageGreen50, "Energia")
             Spacer(Modifier.width(16.dp))

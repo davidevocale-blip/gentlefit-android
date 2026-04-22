@@ -42,7 +42,8 @@ fun CoachScreen(viewModel: CoachViewModel = hiltViewModel()) {
                     contentAlignment = Alignment.Center
                 ) { Text("🌸", fontSize = 36.sp) }
                 Spacer(Modifier.height(12.dp))
-                Text("Coach Marta", style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
+                Text("Coach Marta", style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onBackground)
                 Text("La tua amica del benessere", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         }
@@ -57,7 +58,7 @@ fun CoachScreen(viewModel: CoachViewModel = hiltViewModel()) {
             Text(
                 state.greeting.ifBlank { "Ciao! Come stai oggi?" },
                 Modifier.padding(16.dp), style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurface, lineHeight = 24.sp
+                color = Plum30, lineHeight = 24.sp
             )
         }
 
@@ -94,7 +95,8 @@ fun CoachScreen(viewModel: CoachViewModel = hiltViewModel()) {
             exit = fadeOut(tween(200)) + shrinkVertically(tween(200))
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                Text("Come ti senti oggi?", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
+                Text("Come ti senti oggi?", style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.onBackground)
                 Spacer(Modifier.height(4.dp))
                 state.options.forEach { option ->
                     Button(

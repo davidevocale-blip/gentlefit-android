@@ -1,6 +1,7 @@
 package com.gentlefit.app.ui.screen.home
 
 import androidx.compose.animation.*
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -17,10 +18,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.gentlefit.app.R
 import com.gentlefit.app.ui.components.*
 import com.gentlefit.app.ui.theme.*
 import java.time.LocalTime
@@ -43,7 +47,8 @@ fun HomeScreen(onNavigateToProfile: () -> Unit, viewModel: HomeViewModel = hiltV
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
                 Column {
                     Text("$greeting,", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    Text("${state.userName.ifBlank { "cara" }} 🌸", style = MaterialTheme.typography.headlineLarge, fontWeight = FontWeight.Bold)
+                    Text("${state.userName.ifBlank { "cara" }} 🌸", style = MaterialTheme.typography.headlineLarge, fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onBackground)
                 }
                 IconButton(onClick = onNavigateToProfile) {
                     Box(Modifier.size(44.dp).clip(CircleShape).background(Plum60.copy(0.15f)), contentAlignment = Alignment.Center) {
@@ -69,6 +74,23 @@ fun HomeScreen(onNavigateToProfile: () -> Unit, viewModel: HomeViewModel = hiltV
 
             Spacer(Modifier.height(16.dp))
 
+            // Emotional nature image
+            Box(Modifier.fillMaxWidth().height(160.dp).clip(RoundedCornerShape(20.dp))) {
+                Image(
+                    painterResource(R.drawable.nature_wellness), "Natura e benessere",
+                    Modifier.fillMaxSize(), contentScale = ContentScale.Crop
+                )
+                // Gradient overlay for text readability
+                Box(Modifier.fillMaxSize().background(
+                    Brush.verticalGradient(listOf(Color.Transparent, Color.Black.copy(0.4f)))
+                ))
+                Text("✨ Ogni giorno è un nuovo inizio", Modifier.align(Alignment.BottomStart).padding(16.dp),
+                    style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold,
+                    color = Color.White)
+            }
+
+            Spacer(Modifier.height(16.dp))
+
             // Quick Stats + Weekly Ring
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
                 WeeklyRing(progress = state.weeklyCompletion, size = 90.dp)
@@ -86,13 +108,14 @@ fun HomeScreen(onNavigateToProfile: () -> Unit, viewModel: HomeViewModel = hiltV
                 Card(Modifier.fillMaxWidth(), shape = RoundedCornerShape(14.dp),
                     colors = CardDefaults.cardColors(containerColor = Mauve90)) {
                     Column(Modifier.padding(14.dp)) {
-                        Text("Umore ultimi giorni", style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.SemiBold)
+                        Text("Umore ultimi giorni", style = MaterialTheme.typography.labelMedium,
+                            fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.onSurface)
                         Spacer(Modifier.height(6.dp))
                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             state.recentMoods.takeLast(7).forEach { mood ->
                                 val emoji = when (mood.uppercase()) {
-                                    "HAPPY" -> "😊"; "SAD" -> "😢"; "TIRED" -> "😴"
-                                    "ANXIOUS" -> "😰"; "ENERGETIC" -> "⚡"; else -> "😐"
+                                    "GREAT" -> "😊"; "GOOD" -> "🙂"; "LOW" -> "😔"
+                                    "STRONG" -> "💪"; "PEACEFUL" -> "🌸"; else -> "😐"
                                 }
                                 Text(emoji, fontSize = 22.sp)
                             }
@@ -102,22 +125,13 @@ fun HomeScreen(onNavigateToProfile: () -> Unit, viewModel: HomeViewModel = hiltV
                 Spacer(Modifier.height(16.dp))
             }
 
-            // Quote
-            Box(Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp))
-                .background(Brush.horizontalGradient(listOf(Lavender80, Plum80.copy(0.5f))))
-                .padding(16.dp)) {
-                Text(state.quote, style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface.copy(0.85f), lineHeight = 22.sp)
-            }
-
-            Spacer(Modifier.height(20.dp))
-
             // Daily routine
             val routine = state.routine
             if (routine != null) {
                 DailyProgressBar(completedCount = routine.completionCount)
                 Spacer(Modifier.height(16.dp))
-                Text("La tua routine di oggi", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold)
+                Text("La tua routine di oggi", style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.onBackground)
                 Spacer(Modifier.height(12.dp))
 
                 RoutineCard(emoji = routine.exercise.type.emoji, title = routine.exercise.title,
@@ -130,9 +144,16 @@ fun HomeScreen(onNavigateToProfile: () -> Unit, viewModel: HomeViewModel = hiltV
                 RoutineCard(emoji = "🎯", title = "Obiettivo del giorno", description = routine.dailyGoal.text,
                     isCompleted = routine.isGoalCompleted, onAction = { viewModel.completeGoal() })
             } else if (!state.isLoading) {
-                Box(Modifier.fillMaxWidth().height(200.dp).clip(RoundedCornerShape(16.dp))
-                    .background(MaterialTheme.colorScheme.surfaceVariant.copy(0.5f)), contentAlignment = Alignment.Center) {
-                    Text("🌿 La tua routine sta arrivando...", style = MaterialTheme.typography.bodyLarge)
+                // Motivational daily phrase instead of "routine arriving"
+                Box(
+                    Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp))
+                        .background(Brush.horizontalGradient(listOf(Plum90, SageGreen90)))
+                        .padding(24.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(state.quote, style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onSurface, lineHeight = 24.sp,
+                        fontWeight = FontWeight.Medium)
                 }
             }
 
@@ -153,6 +174,7 @@ private fun QuickStatRow(emoji: String, label: String, value: String) {
         Spacer(Modifier.width(6.dp))
         Text(label, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         Spacer(Modifier.width(6.dp))
-        Text(value, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold)
+        Text(value, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold,
+            color = MaterialTheme.colorScheme.onSurface)
     }
 }
